@@ -1,0 +1,50 @@
+<head>
+  <title>Jogo da Velha</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+	<h1 class="center">Jogo da Velha</h1>
+  {{> game}}
+  {{> onlines}}
+</body>
+
+<template name="game">
+	<div class="gameboard">
+	  <div class="row" data-row='1'>
+	  	<div class="col" data-col='1'></div>
+	  	<div class="col" data-col='2'></div>
+	  	<div class="col" data-col='3'></div>
+	  </div>
+	  <div class="row" data-row='2'>
+	  	<div class="col" data-col='1'></div>
+	  	<div class="col" data-col='2'></div>
+	  	<div class="col" data-col='3'></div>
+	  </div>
+	  <div class="row" data-row='3'>
+	  	<div class="col" data-col='1'></div>
+	  	<div class="col" data-col='2'></div>
+	  	<div class="col" data-col='3'></div>
+	  </div>
+	</div>
+</template>
+
+<template name="onlines">
+	<div class="userlist">
+		{{#if currentUser}}
+			<h3>Bem vindo {{currentUser}}.</h3>
+		{{else}}
+			<form class="form">
+				<input type="text" name="username" class="input" placeholder="Start here entering your name.">
+			</form>
+		{{/if}}
+		<hr>
+		<h2>Onlines</h2>
+		{{#each users}}
+			<a href="javascript:void(0);" class="play">
+				<h3>{{name}}</h3>
+			</a>
+		{{/each}}
+	</div>
+</template>

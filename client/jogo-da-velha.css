@@ -1,0 +1,49 @@
+.gameboard {
+	margin: 10px auto;
+	width: 350px;	
+	text-align: center;
+}
+.userlist {
+	margin: 0 auto;
+	width: 350px;
+	padding: 10px;
+	border: 1px #333 solid;
+}
+.row {
+	display: block;
+	border-bottom: 7px solid #333;
+}
+.row:last-child {
+	border-bottom: 0;
+}
+.col {
+	display: inline-block;
+	width: 105px;
+	height: 105px;
+	border-right: 7px solid #333;
+	margin-bottom: -4px;
+}
+.col:last-child {
+	border-right: 0;
+}
+.icon-x {
+	background: url('/resources/icon-x.png') 0 0 no-repeat;
+}
+.icon-o {
+	background: url('/resources/icon-o.png') 0 0 no-repeat;
+}
+.icon-x, .icon-o {
+	display: block;
+	width: 100px;
+	height: 100px;
+	vertical-align: middle;
+	text-align: center;
+}
+.input {
+	font-size: 18px;
+	line-height: 30px;
+	width: 99%;
+}
+.center {
+	text-align: center;
+}
