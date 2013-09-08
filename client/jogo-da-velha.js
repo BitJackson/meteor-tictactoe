@@ -6,6 +6,9 @@ GameStream = new Meteor.Stream('game');
 Meteor.startup(function() {
   Meteor.subscribe('onlines');
   $('.input').focus();
+  $(window).unload(function() {
+    GameStream.emit('quit', Session.get('user'));
+  });
 });
 
 var resetSession = function(room) {
@@ -13,15 +16,16 @@ var resetSession = function(room) {
     Session.set('enemy', null);
     Session.set('room', null);
     Session.set('weapon', WEAPON_X);
+    GameStream.emit('cancel', room);
   }
 }
 
 Template.onlines.events({
   "submit .form": function(event) {
-    var name = $(event.target).find('.input').val();
-    Session.set('user', name);
+    var user = $(event.target).find('.input').val();
+    Session.set('user', user);
     Session.set('weapon', WEAPON_X);
-    GameStream.emit('enter', name);
+    GameStream.emit('enter', user);
     event.preventDefault();
   },
   "click .play": function(event) {
@@ -43,8 +47,8 @@ Template.onlines.currentUser = function() {
 	return Session.get('user');
 };
 
-Template.onlines.users = function() {
-	return Users.find({name: {'$ne': Session.get('user')}});
+Template.onlines.onlines = function() {
+	return Users.find({user: {'$ne': Session.get('user')}});
 };
 
 Template.onlines.hasRoom = function() {
@@ -63,7 +67,6 @@ Template.status.events({
   "click .quit": function(event) {
     var room = Session.get('room');
     resetSession(room);
-    GameStream.emit('cancel', room);
     event.preventDefault();
   }
 });
@@ -103,7 +106,6 @@ GameStream.on('request', function(user, enemy, room) {
       GameStream.emit('start', room, WEAPON_X);
     } else {
       resetSession(room);
-      GameStream.emit('cancel', room);
     }
   }
 });
