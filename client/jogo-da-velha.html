@@ -1,13 +1,14 @@
 <head>
   <title>Jogo da Velha</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=0.5">
 </head>
 
 <body>
-	<h1 class="center">Jogo da Velha</h1>
-  {{> game}}
+	<h1 class="title">Jogo da Velha</h1>
   {{> onlines}}
+  {{> game}}
+  {{> status}}
 </body>
 
 <template name="game">
@@ -30,21 +31,35 @@
 	</div>
 </template>
 
+<template name="status">
+	{{#if hasRoom}}
+		<div class="status">
+			{{#if canPlay}}
+				<strong class="left">Sua vez!</strong>
+			{{else}}
+				<strong class="left">Aguardando...</strong>
+			{{/if}}
+			<a href="javascript:void(0);" class="quit right">Sair</a>
+		</div>
+	{{/if}}
+</template>
+
 <template name="onlines">
-	<div class="userlist">
-		{{#if currentUser}}
-			<h3>Bem vindo {{currentUser}}.</h3>
-		{{else}}
-			<form class="form">
-				<input type="text" name="username" class="input" placeholder="Start here entering your name.">
-			</form>
-		{{/if}}
-		<hr>
-		<h2>Onlines</h2>
-		{{#each users}}
-			<a href="javascript:void(0);" class="play">
-				<h3>{{name}}</h3>
-			</a>
-		{{/each}}
-	</div>
+	{{#unless hasRoom}}
+		<div class="userlist">
+			{{#if currentUser}}
+				<h3>Bem vindo {{currentUser}}.</h3>
+			{{else}}
+				<form class="form">
+					<input type="text" name="username" class="input" placeholder="Digite seu nome aqui.">
+				</form>
+			{{/if}}
+			<hr>
+			<h2>Onlines</h2>
+			<ul>
+			{{#each users}}
+				<li><a href="javascript:void(0);" class="play" data-enemy="{{name}}" title="Jogar com {{name}}">{{name}}</a></li>
+			{{/each}}
+		</div>
+	{{/unless}}
 </template>
