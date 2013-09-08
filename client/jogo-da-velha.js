@@ -1,9 +1,10 @@
 WEAPON_X = 'icon-x', WEAPON_O = 'icon-o';
+
 Users = new Meteor.Collection('users');
 GameStream = new Meteor.Stream('game');
 
 Meteor.startup(function() {
-	Meteor.subscribe('onlines');
+  Meteor.subscribe('onlines');
   $('.input').focus();
 });
 
