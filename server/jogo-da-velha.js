@@ -138,14 +138,11 @@ var GameLogic = {};
 		if(!isValidShot(room,shot))
 			return false;
 
-		console.log(weapon);
 		if(weapon === 'icon-x')
 			_rooms[room].x.push(shot);
 
 		if(weapon === 'icon-o')
 			_rooms[room].o.push(shot);
-
-		console.log(_rooms[room]);
 
 		return true;
 	}
