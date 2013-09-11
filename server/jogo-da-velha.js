@@ -38,12 +38,30 @@ GameStream.on('quit', function(user) {
 
 GameStream.on('shoot', function(room, weapon, row, col) {
 	GameLogic.roomShot(room, weapon,row,col);
+	var winner = GameLogic.roomWinner(room);
+	if(winner)
+		console.log('CONGRATULATIONS ' + winner + '!!!!');
 	GameStream.emit('refresh', room, weapon, row, col);
 });
 
 
-var GameLogic = (function () {
+var GameLogic = {};
+
+(function (scope) {
+
 	var _places = ['11','12','13','21','22','23','31','32','33'];
+
+	//one number in a winner sequence correspond to one key in _places
+	var _winner_sequences = [
+		//rows
+		[0,1,2],[3,4,5],[6,7,8],
+		//cols
+		[0,3,6],[1,4,7],[2,5,8],
+		//crossed
+		[0,4,8],[2,4,6]
+	];
+
+	//TODO comment
 	var _rooms = {};
 
 	function isValidShot(room,shot) {
@@ -61,32 +79,57 @@ var GameLogic = (function () {
 		return true;
 	}
 
-	return {
-		roomAdd: function (room) {
-			if(_rooms[room]) 
+	function sequenceMatch(arr1, arr2) {
+		for(var i = 0; i < arr1.length; i++) {
+			if(arr2.indexOf(arr1[i]) === -1)
 				return false;
-			_rooms[room] = {x: [], o: []};
-			return true;
-		},
-
-		roomDelete: function(room) {
-			if(!_rooms[room]) 
-				return false;
-			delete _rooms[room];
-			return true;
-		},
-
-		roomShot: function (room, weapon, row, col) {
-			
-			if(typeof row !== 'number' || typeof col !== 'number')
-				return false;
-
-			var shot = _places.indexOf(row.toString() + col.toString());
-			if(!isValidShot(room,shot))
-				return false;
-
-			return true;
 		}
-	};
+		return true;
+	}
 
-})();
+	scope.roomAdd = function (room) {
+		if(_rooms[room]) 
+			return false;
+		_rooms[room] = {x: [], o: []};
+		return true;
+	}
+
+	scope.roomDelete = function (room) {
+		if(!_rooms[room]) 
+			return false;
+		delete _rooms[room];
+		return true;
+	}
+
+	scope.roomShot = function (room, weapon, row, col) {
+		if(typeof row !== 'number' || typeof col !== 'number')
+			return false;
+
+		var shot = _places.indexOf(row.toString() + col.toString());
+		if(!isValidShot(room,shot))
+			return false;
+
+		console.log(weapon);
+		if(weapon === 'icon-x')
+			_rooms[room].x.push(shot);
+
+		if(weapon === 'icon-o')
+			_rooms[room].o.push(shot);
+
+		console.log(_rooms[room]);
+
+		return true;
+	}
+
+	scope.roomWinner = function (room) {
+		for(var i = 0; i < _winner_sequences.length; i++) {
+			if( sequenceMatch( _winner_sequences[i], _rooms[room].x) )
+				return 'icon-x';
+			if( sequenceMatch( _winner_sequences[i], _rooms[room].o) )
+				return 'icon-o';
+		}
+		return null;
+	}
+
+})(GameLogic);
+
