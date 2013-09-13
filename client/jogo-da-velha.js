@@ -1,5 +1,3 @@
-WEAPON_X = 'icon-x', WEAPON_O = 'icon-o';
-
 Users = new Meteor.Collection('users');
 GameStream = new Meteor.Stream('game');
 
@@ -15,7 +13,7 @@ var resetSession = function(room) {
   if(Session.equals('room', room)) {
     Session.set('enemy', null);
     Session.set('room', null);
-    Session.set('weapon', WEAPON_X);
+    Session.set('weapon', GameLogic.X);
     GameStream.emit('cancel', room);
   }
 }
@@ -24,7 +22,7 @@ Template.onlines.events({
   "submit .form": function(event) {
     var user = $(event.target).find('.input').val();
     Session.set('user', user);
-    Session.set('weapon', WEAPON_X);
+    Session.set('weapon', GameLogic.X);
     GameStream.emit('enter', user);
     event.preventDefault();
   },
@@ -101,10 +99,10 @@ GameStream.on('request', function(user, enemy, room) {
   if(Session.equals('user', user)) {
     if(confirm('Deseja jogar com '+ enemy +'?')) {
       Session.set('enemy', enemy);
-      Session.set('weapon', WEAPON_O);
+      Session.set('weapon', GameLogic.O);
       Session.set('room', room);
       Session.set('play', false);
-      GameStream.emit('start', room, WEAPON_X);
+      GameStream.emit('start', room, GameLogic.X);
     } else {
       resetSession(room);
     }
