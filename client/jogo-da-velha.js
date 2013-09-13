@@ -14,7 +14,6 @@ var resetSession = function(room) {
     Session.set('enemy', null);
     Session.set('room', null);
     Session.set('weapon', GameLogic.X);
-    GameStream.emit('cancel', room);
   }
 }
 
@@ -65,7 +64,7 @@ Template.status.helpers({
 Template.status.events({
   "click .quit": function(event) {
     var room = Session.get('room');
-    resetSession(room);
+    GameStream.emit('cancel', room);
     event.preventDefault();
   }
 });
@@ -104,7 +103,7 @@ GameStream.on('request', function(user, enemy, room) {
       Session.set('play', false);
       GameStream.emit('start', room, GameLogic.X);
     } else {
-      resetSession(room);
+      GameStream.emit('cancel', room);
     }
   }
 });
@@ -117,6 +116,14 @@ GameStream.on('abort', function(room) {
 GameStream.on('play', function(room, weapon) {
   if(Session.equals('room', room) && Session.equals('weapon', weapon)) {
     Session.set('play', true);
+  }
+});
+
+GameStream.on('end', function(user, status) {
+  if(status === GameLogic.D) {
+    alert('Empate!');
+  } else {
+    alert('Vencedor: ' + status);
   }
 });
 

@@ -33,13 +33,15 @@ GameStream.on('cancel', function(room) {
 });
 
 GameStream.on('quit', function(user) {
-	User.remove({user: user})
+	User.remove({user: user});
 });
 
 GameStream.on('shoot', function(room, weapon, row, col) {
 	GameLogic.roomShot(room, weapon,row,col);
-	var winner = GameLogic.roomWinner(room);
-	if(winner)
-		console.log('CONGRATULATIONS ' + winner + '!!!!');
-	GameStream.emit('refresh', room, weapon, row, col);
+	var gameStatus = GameLogic.isGameOver(room);
+	if(gameStatus) {
+		GameStream.emit('end', gameStatus);
+	} else {
+		GameStream.emit('refresh', room, weapon, row, col);
+	}
 });
