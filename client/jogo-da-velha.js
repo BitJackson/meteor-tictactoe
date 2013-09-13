@@ -43,25 +43,26 @@ Template.onlines.events({
   }
 });
 
-Template.onlines.currentUser = function() {
-	return Session.get('user');
-};
+Template.onlines.helpers({
+  currentUser: function() {
+    return Session.get('user');
+  },
+  onlines: function() {
+    return Users.find({user: {'$ne': Session.get('user')}});
+  },
+  hasRoom: function() {
+    return Session.get('room');
+  }
+});
 
-Template.onlines.onlines = function() {
-	return Users.find({user: {'$ne': Session.get('user')}});
-};
-
-Template.onlines.hasRoom = function() {
-  return Session.get('room');
-};
-
-Template.status.hasRoom = function() {
-  return Session.get('room');
-};
-
-Template.status.canPlay = function() {
-  return Session.get('play');
-};
+Template.status.helpers({
+  hasRoom: function() {
+    return Session.get('room');
+  },
+  canPlay: function() {
+    return Session.get('play');
+  }
+});
 
 Template.status.events({
   "click .quit": function(event) {
