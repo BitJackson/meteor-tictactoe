@@ -7,28 +7,26 @@
 <body>
 	<h1 class="title">Jogo da Velha</h1>
   {{> onlines}}
-  {{> game}}
+  <div class="gameboard"></div>
   {{> status}}
 </body>
 
 <template name="game">
-	<div class="gameboard">
-	  <div class="row" data-row='1'>
-	  	<div class="col" data-col='1'></div>
-	  	<div class="col" data-col='2'></div>
-	  	<div class="col" data-col='3'></div>
-	  </div>
-	  <div class="row" data-row='2'>
-	  	<div class="col" data-col='1'></div>
-	  	<div class="col" data-col='2'></div>
-	  	<div class="col" data-col='3'></div>
-	  </div>
-	  <div class="row" data-row='3'>
-	  	<div class="col" data-col='1'></div>
-	  	<div class="col" data-col='2'></div>
-	  	<div class="col" data-col='3'></div>
-	  </div>
-	</div>
+  <div class="row" data-row='1'>
+  	<div class="col" data-col='1'></div>
+  	<div class="col" data-col='2'></div>
+  	<div class="col" data-col='3'></div>
+  </div>
+  <div class="row" data-row='2'>
+  	<div class="col" data-col='1'></div>
+  	<div class="col" data-col='2'></div>
+  	<div class="col" data-col='3'></div>
+  </div>
+  <div class="row" data-row='3'>
+  	<div class="col" data-col='1'></div>
+  	<div class="col" data-col='2'></div>
+  	<div class="col" data-col='3'></div>
+  </div>
 </template>
 
 <template name="status">

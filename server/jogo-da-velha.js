@@ -32,16 +32,17 @@ GameStream.on('cancel', function(room) {
 	GameStream.emit('abort', room);
 });
 
+GameStream.on('endgame', function(room) {
+	GameLogic.roomDelete(room);
+	GameStream.emit('end', room);
+});
+
 GameStream.on('quit', function(user) {
 	User.remove({user: user});
 });
 
-GameStream.on('shoot', function(room, weapon, row, col) {
-	GameLogic.roomShot(room, weapon,row,col);
-	var gameStatus = GameLogic.isGameOver(room);
-	if(gameStatus) {
-		GameStream.emit('end', gameStatus);
-	} else {
-		GameStream.emit('refresh', room, weapon, row, col);
-	}
+GameStream.on('shoot', function(room, user, weapon, row, col) {
+	GameLogic.roomShot(room, weapon, row, col);
+	var status = GameLogic.isGameOver(room);
+	GameStream.emit('refresh', room, user, weapon, row, col, status);
 });

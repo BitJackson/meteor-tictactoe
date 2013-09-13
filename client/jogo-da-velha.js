@@ -3,6 +3,7 @@ GameStream = new Meteor.Stream('game');
 
 Meteor.startup(function() {
   Meteor.subscribe('onlines');
+  $('.gameboard').html(Meteor.render(Template.game));
   $('.input').focus();
   $(window).unload(function() {
     GameStream.emit('quit', Session.get('user'));
@@ -14,6 +15,18 @@ var resetSession = function(room) {
     Session.set('enemy', null);
     Session.set('room', null);
     Session.set('weapon', GameLogic.X);
+    $('.gameboard').html(Meteor.render(Template.game));
+  }
+}
+
+var checkGameOver = function(user, status) {
+  if(status) {
+    if(status === GameLogic.D) {
+      alert('Empate!');
+    } else {
+      alert('Vencedor: ' + user);
+    }
+    GameStream.emit('endgame', Session.get('room'));
   }
 }
 
@@ -78,8 +91,9 @@ Template.game.events({
           var weapon = Session.get('weapon');
           var col = $(event.target).data('col');
           var row = $(event.target).closest('.row').data('row');
+          var user = Session.get('user');
           Session.set('play', false);
-          GameStream.emit('shoot', room, weapon, row, col);
+          GameStream.emit('shoot', room, user, weapon, row, col);
         } else {
           alert("Aguarde a sua vez.");
         }
@@ -108,6 +122,10 @@ GameStream.on('request', function(user, enemy, room) {
   }
 });
 
+GameStream.on('end', function(room) {
+  resetSession(room);
+});
+
 GameStream.on('abort', function(room) {
   alert('Jogo cancelado.');
   resetSession(room);
@@ -119,20 +137,13 @@ GameStream.on('play', function(room, weapon) {
   }
 });
 
-GameStream.on('end', function(user, status) {
-  if(status === GameLogic.D) {
-    alert('Empate!');
-  } else {
-    alert('Vencedor: ' + status);
-  }
-});
-
-GameStream.on('refresh', function(room, weapon, row, col) {
+GameStream.on('refresh', function(room, user, weapon, row, col, status) {
   if(Session.equals('room', room)) {
     var board = $('.gameboard');
     var target = board.find('.row[data-row="'+ row +'"]');
     target = target.find('.col[data-col="'+ col +'"]');
     target.html('<i class="'+ weapon +'"></i>');
+    checkGameOver(user, status);
     if(!Session.equals('weapon', weapon)) {
       Session.set('play', true); 
     }
