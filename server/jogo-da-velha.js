@@ -1,4 +1,3 @@
-Users = new Meteor.Collection('users');
 GameStream = new Meteor.Stream('game');
 
 GameStream.permissions.write(function() { return true; });
@@ -15,7 +14,7 @@ Meteor.publish('onlines', function() {
 });
 
 GameStream.on('enter', function(user) {
-	Users.insert({user: user});
+	Users.insert({user: user, score: 0});
 });
 
 GameStream.on('start', function(room, weapon) {
@@ -46,3 +45,8 @@ GameStream.on('shoot', function(room, user, weapon, row, col) {
 	var status = GameLogic.isGameOver(room);
 	GameStream.emit('refresh', room, user, weapon, row, col, status);
 });
+
+
+GameStream.on('winner', function (user) {
+	Users.winner(user);
+})
