@@ -1,4 +1,3 @@
-Users = new Meteor.Collection('users');
 GameStream = new Meteor.Stream('game');
 
 Meteor.startup(function() {
@@ -24,6 +23,8 @@ var checkGameOver = function(user, status) {
     if(status === GameLogic.D) {
       alert('Empate!');
     } else {
+      if(status === Session.get('weapon'))
+        GameStream.emit('winner',user);
       alert('Vencedor: ' + user);
     }
     GameStream.emit('endgame', Session.get('room'));
@@ -55,10 +56,10 @@ Template.onlines.events({
 
 Template.onlines.helpers({
   currentUser: function() {
-    return Session.get('user');
+    return Users.myInfo(Session.get('user'));
   },
   onlines: function() {
-    return Users.find({user: {'$ne': Session.get('user')}});
+    return Users.opponents();
   },
   hasRoom: function() {
     return Session.get('room');
