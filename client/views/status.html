@@ -1,0 +1,12 @@
+<template name="status">
+	{{#if hasRoom}}
+		<div class="status">
+			{{#if canPlay}}
+				<strong class="left">Sua vez!</strong>
+			{{else}}
+				<strong class="left">Aguardando...</strong>
+			{{/if}}
+			<a href="javascript:void(0);" class="quit right">Sair</a>
+		</div>
+	{{/if}}
+</template>

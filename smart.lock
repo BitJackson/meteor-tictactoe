@@ -2,13 +2,19 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "streams": {}
+      "streams": {},
+      "smart-collections": {}
     },
     "packages": {
       "streams": {
         "git": "https://github.com/arunoda/meteor-streams.git",
-        "tag": "v0.1.15",
-        "commit": "a380d777bfa5fde3096adafb253cc040ba65117b"
+        "tag": "v0.1.16",
+        "commit": "ebb9f3a243072139ea644fd7ce68916b7cb8f446"
+      },
+      "smart-collections": {
+        "git": "https://github.com/arunoda/meteor-smart-collections.git",
+        "tag": "v0.3.16",
+        "commit": "401e96bd5d4ee0dd1c8d9706cae71a3eb181bff9"
       }
     }
   }

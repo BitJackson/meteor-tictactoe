@@ -3,16 +3,6 @@ GameStream = new Meteor.Stream('game');
 GameStream.permissions.write(function() { return true; });
 GameStream.permissions.read(function() { return true; });
 
-Meteor.startup(function() {
-	if(Users.find().count()) {
-		Users.remove({});
-	}
-});
-
-Meteor.publish('onlines', function() {
-	return Users.find();
-});
-
 GameStream.on('enter', function(user) {
 	Users.insert({user: user, score: 0});
 });
@@ -45,7 +35,6 @@ GameStream.on('shoot', function(room, user, weapon, row, col) {
 	var status = GameLogic.isGameOver(room);
 	GameStream.emit('refresh', room, user, weapon, row, col, status);
 });
-
 
 GameStream.on('winner', function (user) {
 	Users.winner(user);
