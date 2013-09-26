@@ -7,9 +7,8 @@ Template.game.events({
           var weapon = Session.get('weapon');
           var col = $(event.target).data('col');
           var row = $(event.target).closest('.row').data('row');
-          var user = Session.get('user');
           Session.set('play', false);
-          GameStream.emit('shoot', room, user, weapon, row, col);
+          GameStream.emit('shoot', room, weapon, row, col);
         } else {
           alert("Aguarde a sua vez.");
         }

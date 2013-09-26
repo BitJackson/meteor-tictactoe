@@ -1,6 +1,7 @@
 <template name="status">
 	{{#if hasRoom}}
 		<div class="status">
+			<h3>{{currentUser}}</h3>
 			{{#if canPlay}}
 				<strong class="left">Sua vez!</strong>
 			{{else}}

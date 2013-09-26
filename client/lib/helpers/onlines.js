@@ -1,9 +1,9 @@
 Template.onlines.helpers({
   currentUser: function() {
-    return Users.myInfo(Session.get('user'));
+    return Users.info(Session.get('user'));
   },
   onlines: function() {
-    return Users.opponents();
+    return Onlines.opponentsOf(Session.get('user'));
   },
   hasRoom: function() {
     return Session.get('room');
@@ -13,9 +13,13 @@ Template.onlines.helpers({
 Template.onlines.events({
   "submit .form": function(event) {
     var user = $(event.target).find('.input').val();
-    Session.set('user', user);
-    Session.set('weapon', GameLogic.X);
-    GameStream.emit('enter', user);
+    if(user) {
+      Session.set('user', user);
+      Session.set('weapon', GameLogic.X);
+      GameStream.emit('enter', user);
+    } else {
+      alert('Digite um nome válido.');
+    }
     event.preventDefault();
   },
   "click .play": function(event) {

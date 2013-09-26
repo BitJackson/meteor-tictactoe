@@ -7,16 +7,21 @@ var resetSession = function(room) {
   }
 }
 
-var checkGameOver = function(user, status) {
+var checkGameOver = function(status) {
   if(status) {
     if(status === GameLogic.D) {
+      GameStream.emit('draw', Session.get('user'));
       alert('Empate!');
     } else {
-      if(status === Session.get('weapon'))
-        GameStream.emit('winner',user);
-      alert('Vencedor: ' + user);
+      if(status === Session.get('weapon')) {
+        GameStream.emit('winner', Session.get('user'));
+        alert('Vencedor: ' + Session.get('user'));
+      } else {
+        GameStream.emit('loser', Session.get('user'));
+        alert('Perdedor: ' + Session.get('user'));
+      }
     }
-    GameStream.emit('endgame', Session.get('room'));
+    GameStream.emit('gameover', Session.get('room'));
   }
 }
 
@@ -49,13 +54,13 @@ GameStream.on('play', function(room, weapon) {
   }
 });
 
-GameStream.on('refresh', function(room, user, weapon, row, col, status) {
+GameStream.on('refresh', function(room, weapon, row, col, status) {
   if(Session.equals('room', room)) {
     var board = $('.gameboard');
     var target = board.find('.row[data-row="'+ row +'"]');
     target = target.find('.col[data-col="'+ col +'"]');
     target.html('<i class="'+ weapon +'"></i>');
-    checkGameOver(user, status);
+    checkGameOver(status);
     if(!Session.equals('weapon', weapon)) {
       Session.set('play', true); 
     }

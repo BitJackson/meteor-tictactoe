@@ -2,17 +2,19 @@
 	{{#unless hasRoom}}
 		<div class="userlist">
 			{{#if currentUser}}
-				<h3>Bem vindo {{currentUser.user}} ({{currentUser.score}} pontos).</h3>
+				<h2>{{currentUser.user}} ({{currentUser.wins}} vitórias).</h2>
 			{{else}}
 				<form class="form">
-					<input type="text" name="username" class="input" placeholder="Digite seu nome aqui.">
+					<input type="text" class="input" placeholder="Digite seu nome aqui.">
 				</form>
 			{{/if}}
 			<hr>
-			<h2>Onlines</h2>
+			<h3>Oponentes</h3>
 			<ul>
 			{{#each onlines}}
-				<li><a href="javascript:;" class="play" data-enemy="{{user}}" title="Jogar com {{user}}">{{user}}</a> ({{score}} pontos)</li>
+				<li>
+					<a href="javascript:;" class="play" data-enemy="{{user}}" title="Jogar com {{user}}">{{user}}</a>
+				</li>
 			{{/each}}
 		</div>
 	{{/unless}}

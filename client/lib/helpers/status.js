@@ -1,4 +1,7 @@
 Template.status.helpers({
+  currentUser: function() {
+    return Session.get('user');
+  },
   hasRoom: function() {
     return Session.get('room');
   },

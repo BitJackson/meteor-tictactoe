@@ -4,7 +4,8 @@ GameStream.permissions.write(function() { return true; });
 GameStream.permissions.read(function() { return true; });
 
 GameStream.on('enter', function(user) {
-	Users.insert({user: user, score: 0});
+	Users.login(user);
+	Onlines.enter(user);
 });
 
 GameStream.on('start', function(room, weapon) {
@@ -21,21 +22,29 @@ GameStream.on('cancel', function(room) {
 	GameStream.emit('abort', room);
 });
 
-GameStream.on('endgame', function(room) {
+GameStream.on('quit', function(user) {
+	Onlines.quit(user);
+});
+
+GameStream.on('shoot', function(room, weapon, row, col) {
+	GameLogic.roomShot(room, weapon, row, col);
+	var status = GameLogic.isGameOver(room);
+	GameStream.emit('refresh', room, weapon, row, col, status);
+});
+
+GameStream.on('gameover', function(room) {
 	GameLogic.roomDelete(room);
 	GameStream.emit('end', room);
 });
 
-GameStream.on('quit', function(user) {
-	User.remove({user: user});
-});
-
-GameStream.on('shoot', function(room, user, weapon, row, col) {
-	GameLogic.roomShot(room, weapon, row, col);
-	var status = GameLogic.isGameOver(room);
-	GameStream.emit('refresh', room, user, weapon, row, col, status);
-});
-
 GameStream.on('winner', function (user) {
-	Users.winner(user);
-})
+	Users.wins(user);
+});
+
+GameStream.on('loser', function (user) {
+	Users.loses(user);
+});
+
+GameStream.on('draw', function (user) {
+	Users.draws(user);
+});
