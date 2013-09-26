@@ -9,19 +9,20 @@ var resetSession = function(room) {
 
 var checkGameOver = function(status) {
   if(status) {
+    var user = Session.get('user');
     if(status === GameLogic.D) {
-      GameStream.emit('draw', Session.get('user'));
+      GameStream.emit('draw', user);
       alert('Empate!');
     } else {
       if(status === Session.get('weapon')) {
-        GameStream.emit('winner', Session.get('user'));
-        alert('Vencedor: ' + Session.get('user'));
+        GameStream.emit('winner', user);
+        alert('Vencedor: %s', user);
       } else {
-        GameStream.emit('loser', Session.get('user'));
-        alert('Perdedor: ' + Session.get('user'));
+        GameStream.emit('loser', user);
+        alert('Perdedor: %s', user);
       }
     }
-    GameStream.emit('gameover', Session.get('room'));
+    GameStream.emit('gameover', user, Session.get('room'));
   }
 }
 
@@ -32,7 +33,7 @@ GameStream.on('request', function(user, enemy, room) {
       Session.set('weapon', GameLogic.O);
       Session.set('room', room);
       Session.set('play', false);
-      GameStream.emit('start', room, GameLogic.X);
+      GameStream.emit('start', user, enemy, room, GameLogic.X);
     } else {
       GameStream.emit('cancel', room);
     }
@@ -40,6 +41,7 @@ GameStream.on('request', function(user, enemy, room) {
 });
 
 GameStream.on('end', function(room) {
+  alert('Jogo terminado.');
   resetSession(room);
 });
 

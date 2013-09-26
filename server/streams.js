@@ -8,8 +8,9 @@ GameStream.on('enter', function(user) {
 	Onlines.enter(user);
 });
 
-GameStream.on('start', function(room, weapon) {
+GameStream.on('start', function(user, enemy, room, weapon) {
 	GameLogic.roomAdd(room);
+	Onlines.startGame(user, enemy);
 	GameStream.emit('play', room, weapon);
 });
 
@@ -32,8 +33,9 @@ GameStream.on('shoot', function(room, weapon, row, col) {
 	GameStream.emit('refresh', room, weapon, row, col, status);
 });
 
-GameStream.on('gameover', function(room) {
+GameStream.on('gameover', function(user, room) {
 	GameLogic.roomDelete(room);
+	Onlines.gameOver(user);
 	GameStream.emit('end', room);
 });
 
