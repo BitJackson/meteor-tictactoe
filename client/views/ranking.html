@@ -1,0 +1,22 @@
+<template name="ranking">
+	<div class="ranking">
+		<h3>Ranking</h3>
+		<hr>
+		<table>
+			<tr>
+				<td width="40%">Nome</td>
+				<td width="20%">Jogadas</td>
+				<td width="20%">Vitórias</td>
+				<td width="20%">Derrotas</td>
+			</tr>
+			{{#each users}}
+				<tr>
+					<td>{{user}}</td>
+					<td align="center">{{plays}}</td>
+					<td align="center">{{wins}}</td>
+					<td align="center">{{loses}}</td>
+				</tr>
+			{{/each}}
+		</table>
+	</div>
+</template>

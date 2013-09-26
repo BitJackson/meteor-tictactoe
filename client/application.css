@@ -68,7 +68,7 @@ li {
 	width: 290px;	
 	text-align: center;
 }
-.userlist {
+.userlist, .ranking {
 	margin: 30px auto;
 	width: 290px;
 	padding: 10px;
