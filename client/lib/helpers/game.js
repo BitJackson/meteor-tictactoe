@@ -1,3 +1,9 @@
+Template.game.helpers({
+  isPlaying: function() {
+    return Session.get('playing');
+  }
+});
+
 Template.game.events({
   "click .col": function(event) {
     if(Session.get('user')) {

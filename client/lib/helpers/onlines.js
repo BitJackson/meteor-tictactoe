@@ -28,6 +28,7 @@ Template.onlines.events({
       var enemy = $(event.target).data('enemy');
       var room = Random.id();
       Session.set('room', room);
+      Session.set('playing', true);
       $('.gameboard').html(Meteor.render(Template.game));
       GameStream.emit('invite', enemy, user, room);
     } else {

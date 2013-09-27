@@ -1,8 +1,9 @@
 var clearGameSession = function(msg, room) {
   if(Session.equals('room', room)) {
-    alert(msg);
+    if(msg) { alert(msg); }
     Session.set('enemy', null);
     Session.set('room', null);
+    Session.set('playing', false);
     Session.set('weapon', GameLogic.X);
     $('.gameboard').empty();
     $('.opponents').html(Meteor.render(Template.onlines));
@@ -26,7 +27,7 @@ var checkGameOver = function(status) {
         alert('Perdedor: '+ user);
       }
     }
-    GameStream.emit('gameover', 'Fim de jogo.', user, enemy, room);
+    GameStream.emit('gameover', null, user, enemy, room);
   }
 }
 
@@ -36,19 +37,37 @@ var changeUserPlay = function(room, weapon) {
   }
 }
 
-GameStream.on('request', function(user, enemy, room) {
+var refreshBoard = function(room, weapon, row, col, status) {
+  if(Session.equals('room', room)) {
+    var board = $('.gameboard');
+    var target = board.find('.row[data-row="'+ row +'"]');
+    target = target.find('.col[data-col="'+ col +'"]');
+    target.html('<i class="'+ weapon +'"></i>');
+    checkGameOver(status);
+    if(!Session.equals('weapon', weapon)) {
+      Session.set('play', true);
+    }
+  }
+}
+
+var prepareGame = function(user, enemy, room) {
   if(Session.equals('user', user)) {
     if(confirm('Deseja jogar com '+ enemy +'?')) {
       Session.set('enemy', enemy);
       Session.set('weapon', GameLogic.O);
       Session.set('room', room);
       Session.set('play', false);
+      Session.set('playing', true);
       $('.gameboard').html(Meteor.render(Template.game));
       GameStream.emit('start', user, enemy, room, GameLogic.X);
     } else {
       GameStream.emit('cancel', 'Jogo cancelado', room);
     }
   }
+}
+
+GameStream.on('request', function(user, enemy, room) {
+  prepareGame(user, enemy, room);
 });
 
 GameStream.on('end', function(msg, room) {
@@ -60,14 +79,5 @@ GameStream.on('play', function(room, weapon) {
 });
 
 GameStream.on('refresh', function(room, weapon, row, col, status) {
-  if(Session.equals('room', room)) {
-    var board = $('.gameboard');
-    var target = board.find('.row[data-row="'+ row +'"]');
-    target = target.find('.col[data-col="'+ col +'"]');
-    target.html('<i class="'+ weapon +'"></i>');
-    checkGameOver(status);
-    if(!Session.equals('weapon', weapon)) {
-      Session.set('play', true); 
-    }
-  }
+  refreshBoard(room, weapon, row, col, status);
 });

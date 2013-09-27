@@ -110,6 +110,9 @@ li {
 	line-height: 30px;
 	width: 99%;
 }
+.is-hide {
+	display: none;
+}
 .center {
 	text-align: center;
 }
