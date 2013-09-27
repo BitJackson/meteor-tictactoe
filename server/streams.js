@@ -18,25 +18,25 @@ GameStream.on('invite', function(enemy, user, room) {
 	GameStream.emit('request', enemy, user, room);
 });
 
-GameStream.on('cancel', function(room) {
-	GameLogic.roomDelete(room);
-	GameStream.emit('abort', room);
-});
-
-GameStream.on('quit', function(user) {
-	Onlines.quit(user);
-});
-
 GameStream.on('shoot', function(room, weapon, row, col) {
 	GameLogic.roomShot(room, weapon, row, col);
 	var status = GameLogic.isGameOver(room);
 	GameStream.emit('refresh', room, weapon, row, col, status);
 });
 
-GameStream.on('gameover', function(user, room) {
+GameStream.on('gameover', function(msg, user, enemy, room) {
 	GameLogic.roomDelete(room);
-	Onlines.gameOver(user);
-	GameStream.emit('end', room);
+	Onlines.gameOver(user, enemy);
+	GameStream.emit('end', msg, room);
+});
+
+GameStream.on('cancel', function(msg, room) {
+	GameLogic.roomDelete(room);
+	GameStream.emit('end', msg, room);
+});
+
+GameStream.on('quit', function(user) {
+	Onlines.quit(user);
 });
 
 GameStream.on('winner', function (user) {

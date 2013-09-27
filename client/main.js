@@ -1,28 +1,38 @@
-var resetSession = function(room) {
+var clearGameSession = function(msg, room) {
   if(Session.equals('room', room)) {
+    alert(msg);
     Session.set('enemy', null);
     Session.set('room', null);
     Session.set('weapon', GameLogic.X);
-    $('.gameboard').html(Meteor.render(Template.game));
+    $('.gameboard').empty();
+    $('.opponents').html(Meteor.render(Template.onlines));
   }
 }
 
 var checkGameOver = function(status) {
   if(status) {
     var user = Session.get('user');
+    var enemy = Session.get('enemy');
+    var room = Session.get('room');
     if(status === GameLogic.D) {
       GameStream.emit('draw', user);
       alert('Empate!');
     } else {
       if(status === Session.get('weapon')) {
         GameStream.emit('winner', user);
-        alert('Vencedor: %s', user);
+        alert('Vencedor: '+ user);
       } else {
         GameStream.emit('loser', user);
-        alert('Perdedor: %s', user);
+        alert('Perdedor: '+ user);
       }
     }
-    GameStream.emit('gameover', user, Session.get('room'));
+    GameStream.emit('gameover', user, enemy, room);
+  }
+}
+
+var changeUserPlay = function(room, weapon) {
+  if(Session.equals('room', room) && Session.equals('weapon', weapon)) {
+    Session.set('play', true);
   }
 }
 
@@ -33,27 +43,20 @@ GameStream.on('request', function(user, enemy, room) {
       Session.set('weapon', GameLogic.O);
       Session.set('room', room);
       Session.set('play', false);
+      $('.gameboard').html(Meteor.render(Template.game));
       GameStream.emit('start', user, enemy, room, GameLogic.X);
     } else {
-      GameStream.emit('cancel', room);
+      GameStream.emit('cancel', 'Jogo cancelado', room);
     }
   }
 });
 
-GameStream.on('end', function(room) {
-  alert('Jogo terminado.');
-  resetSession(room);
-});
-
-GameStream.on('abort', function(room) {
-  alert('Jogo cancelado.');
-  resetSession(room);
+GameStream.on('end', function(msg, room) {
+  clearGameSession(msg, room);
 });
 
 GameStream.on('play', function(room, weapon) {
-  if(Session.equals('room', room) && Session.equals('weapon', weapon)) {
-    Session.set('play', true);
-  }
+  changeUserPlay(room, weapon);
 });
 
 GameStream.on('refresh', function(room, weapon, row, col, status) {

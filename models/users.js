@@ -12,15 +12,15 @@ Users.login = function(user) {
 }
 
 Users.wins = function (user) {
-  this.update({user: user}, {'$inc': {plays: 1, wins: 1}});
+  this.update({user: user}, {$inc: {plays: 1, wins: 1}});
 }
 
 Users.draws = function (user) {
-  this.update({user: user}, {'$inc': {plays: 1, draws: 1}});
+  this.update({user: user}, {$inc: {plays: 1, draws: 1}});
 }
 
 Users.loses = function (user) {
-  this.update({user: user}, {'$inc': {plays: 1, loses: 1}});
+  this.update({user: user}, {$inc: {plays: 1, loses: 1}});
 }
 
 Users.startup = function() {

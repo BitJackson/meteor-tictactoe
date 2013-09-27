@@ -13,7 +13,10 @@ Template.status.helpers({
 Template.status.events({
   "click .quit": function(event) {
     var room = Session.get('room');
-    GameStream.emit('cancel', room);
+    var user = Session.get('user');
+    var enemy = Session.get('enemy');
+    var msg = 'Jogador '+ user + ' desistiu.';
+    GameStream.emit('gameover', msg, user, enemy, room);
     event.preventDefault();
   }
 });
