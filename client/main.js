@@ -26,7 +26,7 @@ var checkGameOver = function(status) {
         alert('Perdedor: '+ user);
       }
     }
-    GameStream.emit('gameover', user, enemy, room);
+    GameStream.emit('gameover', 'Fim de jogo.', user, enemy, room);
   }
 }
 
