@@ -5,15 +5,15 @@
 				<h2>{{currentUser.user}} ({{currentUser.wins}} vitórias).</h2>
 			{{else}}
 				<form class="form">
-					<input type="text" class="input" placeholder="Digite seu nome aqui.">
+					<input type="text" class="input" placeholder="Input your name.">
 				</form>
 			{{/if}}
 			<hr>
-			<h3>Oponentes</h3>
+			<h3>Opponents</h3>
 			<ul>
 			{{#each onlines}}
 				<li>
-					<a href="javascript:;" class="play" data-enemy="{{user}}" title="Jogar com {{user}}">{{user}}</a>
+					<a href="javascript:;" class="play" data-enemy="{{user}}" title="Play with {{user}}">{{user}}</a>
 				</li>
 			{{/each}}
 		</div>

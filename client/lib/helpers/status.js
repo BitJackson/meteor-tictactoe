@@ -15,7 +15,7 @@ Template.status.events({
     var room = Session.get('room');
     var user = Session.get('user');
     var enemy = Session.get('enemy');
-    var msg = 'Jogador '+ user + ' desistiu.';
+    var msg = 'Player: '+ user + ' give up.';
     GameStream.emit('gameover', msg, user, enemy, room);
     event.preventDefault();
   }

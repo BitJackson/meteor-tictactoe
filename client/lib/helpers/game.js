@@ -14,7 +14,7 @@ Template.game.events({
       Session.set('play', false);
       GameStream.emit('shoot', room, weapon, row, col);
     } else {
-      alert("Aguarde a sua vez.");
+      alert("Please, wait your time.");
     }
     event.preventDefault();
   }

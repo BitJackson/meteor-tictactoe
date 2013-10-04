@@ -18,7 +18,7 @@ Template.onlines.events({
       Session.set('weapon', GameLogic.X);
       GameStream.emit('enter', user);
     } else {
-      alert('Digite um nome válido.');
+      alert('Invalid name.');
     }
     event.preventDefault();
   },
@@ -32,7 +32,7 @@ Template.onlines.events({
       $('.gameboard').html(Meteor.render(Template.game));
       GameStream.emit('invite', enemy, user, room);
     } else {
-      alert('Digite seu nome primeiro.');
+      alert('Type your name first.');
       template.find('.input').focus();
     }
     event.preventDefault();

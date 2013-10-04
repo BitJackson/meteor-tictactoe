@@ -17,14 +17,14 @@ var checkGameOver = function(status) {
     var room = Session.get('room');
     if(status === GameLogic.D) {
       GameStream.emit('draw', user);
-      alert('Empate!');
+      alert('Draw game!');
     } else {
       if(status === Session.get('weapon')) {
         GameStream.emit('winner', user);
-        alert('Vencedor: '+ user);
+        alert('Winner: '+ user);
       } else {
         GameStream.emit('loser', user);
-        alert('Perdedor: '+ user);
+        alert('Loser: '+ user);
       }
     }
     GameStream.emit('gameover', null, user, enemy, room);
@@ -52,7 +52,7 @@ var refreshBoard = function(room, weapon, row, col, status) {
 
 var prepareGame = function(user, enemy, room) {
   if(Session.equals('user', user)) {
-    if(confirm('Deseja jogar com '+ enemy +'?')) {
+    if(confirm('Do you wanna play against '+ enemy +'?')) {
       Session.set('enemy', enemy);
       Session.set('weapon', GameLogic.O);
       Session.set('room', room);
@@ -61,7 +61,7 @@ var prepareGame = function(user, enemy, room) {
       $('.gameboard').html(Meteor.render(Template.game));
       GameStream.emit('start', user, enemy, room, GameLogic.X);
     } else {
-      GameStream.emit('cancel', 'Jogo cancelado', room);
+      GameStream.emit('cancel', 'Game canceled', room);
     }
   }
 }
