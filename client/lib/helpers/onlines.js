@@ -22,7 +22,7 @@ Template.onlines.events({
     }
     event.preventDefault();
   },
-  "click .play": function(event) {
+  "click .play": function(event, template) {
     var user = Session.get('user');
     if(user) {
       var enemy = $(event.target).data('enemy');
@@ -33,7 +33,7 @@ Template.onlines.events({
       GameStream.emit('invite', enemy, user, room);
     } else {
       alert('Digite seu nome primeiro.');
-      $('.input').focus();
+      template.find('.input').focus();
     }
     event.preventDefault();
   }
