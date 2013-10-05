@@ -1,9 +1,6 @@
 Template.game.helpers({
   isPlaying: function() {
     return Session.get('playing');
-  },
-  playClass: function() {
-    return Session.get('play') ? " is-to-play" : " is-to-wait";
   }
 });
 

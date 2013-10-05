@@ -8,8 +8,8 @@ Template.opponents.helpers({
   hasRoom: function() {
     return Session.get('room');
   },
-  isNotPlaying: function() {
-    return Session.get('playing') != true;
+  isPlaying: function() {
+    return Session.get('playing');
   }
 });
 
