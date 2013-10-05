@@ -1,32 +1,31 @@
-## Jogo da velha
+## TicTacToe
 
-Clássico jogo da velha em versão multi-player real-time.
+This is a classic tictactoe multiplayer game, it was built with Meteor Framework (http://meteor.com)
 
-Escrito em Meteor (http://meteor.com)
-
-## Recursos
-* Lógica do game
-* Lista de usuários
+## Current features
+* Game Rules
+* Online opponents
+* Players Ranking
 
 ## TODO
-* Ranking dos vencedores
-* Versão FirefoxOS
-* Versão Android
-* Login com Twitter
-* Login com Facebook
+* FirefoxOS version
+* Android version
+* Twitter login
+* Facebook login
 
-## Instalando e rodando
-Baixe e instale os itens abaixo:
+## Setup and running
+
+Just download the itens below:
 * Node.js (http://nodejs.org)
 * Meteor (http://meteor.com)
-* Meteorite (Rode o comando `npm install -g meteorite`)
-* Rode o comando `meteor`
-* Acesse no browser: `http://localhost:3000`
+* Meteorite (Run the command: `npm install -g meteorite`)
+* Run the command: `meteor`
+* Open the browser: `http://localhost:3000`
 
-## Colaboradores
+## Collaborators
 
 Caio R. Pereira - (http://twitter.com/crp_underground)
 Paulo Cesar - (http://twitter.com/pauloc062)
 
-## Licença
+## License
 * MIT - http://caio-ribeiro-pereira.mit-license.org
