@@ -1,4 +1,4 @@
-Template.onlines.helpers({
+Template.opponents.helpers({
   currentUser: function() {
     return Users.info(Session.get('user'));
   },
@@ -7,10 +7,13 @@ Template.onlines.helpers({
   },
   hasRoom: function() {
     return Session.get('room');
+  },
+  isNotPlaying: function() {
+    return Session.get('playing') != true;
   }
 });
 
-Template.onlines.events({
+Template.opponents.events({
   "submit .form": function(event) {
     var user = $(event.target).find('.input').val();
     if(user) {
