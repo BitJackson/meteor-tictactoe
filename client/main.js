@@ -41,7 +41,7 @@ var refreshBoard = function(room, weapon, row, col, status) {
     var board = $('.gameboard');
     var target = board.find('.row[data-row="'+ row +'"]');
     target = target.find('.col[data-col="'+ col +'"]');
-    if(target.contents().length) {
+    if(!target.contents().length) {
       target.html('<i class="'+ weapon +'"></i>');
       checkGameOver(status);
       if(!Session.equals('weapon', weapon)) {

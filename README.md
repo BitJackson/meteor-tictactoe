@@ -6,6 +6,7 @@ This is a classic tictactoe multiplayer game, it was built with Meteor Framework
 * Game Rules
 * Online opponents
 * Players Ranking
+* Voice Reconigtion Shoot (Thanks to https://www.talater.com/annyang)
 
 ## TODO
 * FirefoxOS version
