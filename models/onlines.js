@@ -18,7 +18,9 @@ Onlines.gameOver = function(user) {
 };
 
 Onlines.quit = function(user) {
-	this.remove({user: user});
+	if(user) {
+		this.remove({user: user});
+	}
 };
 
 Onlines.startup = function() {
