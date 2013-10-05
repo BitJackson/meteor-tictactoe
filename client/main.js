@@ -5,8 +5,7 @@ var clearGameSession = function(msg, room) {
     Session.set('room', null);
     Session.set('playing', false);
     Session.set('weapon', GameLogic.X);
-    $('.gameboard').empty();
-    $('.opponents').html(Meteor.render(Template.onlines));
+    $('.gameboard i').detach();
   }
 }
 
@@ -42,10 +41,14 @@ var refreshBoard = function(room, weapon, row, col, status) {
     var board = $('.gameboard');
     var target = board.find('.row[data-row="'+ row +'"]');
     target = target.find('.col[data-col="'+ col +'"]');
-    target.html('<i class="'+ weapon +'"></i>');
-    checkGameOver(status);
-    if(!Session.equals('weapon', weapon)) {
-      Session.set('play', true);
+    if(target.contents().length) {
+      target.html('<i class="'+ weapon +'"></i>');
+      checkGameOver(status);
+      if(!Session.equals('weapon', weapon)) {
+        Session.set('play', true);
+      }
+    } else {
+      alert('Try another area!');
     }
   }
 }
@@ -58,7 +61,6 @@ var prepareGame = function(user, enemy, room) {
       Session.set('room', room);
       Session.set('play', false);
       Session.set('playing', true);
-      $('.gameboard').html(Meteor.render(Template.game));
       GameStream.emit('start', user, enemy, room, GameLogic.X);
     } else {
       GameStream.emit('cancel', 'Game canceled', room);

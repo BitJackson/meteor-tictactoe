@@ -7,7 +7,7 @@
 						<h2>{{currentUser.user}} ({{currentUser.wins}} wins).</h2>
 					{{else}}
 						<form class="form">
-							<input type="text" class="input" placeholder="Input your name.">
+							<input type="text" class="input" placeholder="Your name and press ENTER" maxlength="25">
 						</form>
 					{{/if}}
 					<hr>
@@ -17,6 +17,8 @@
 						<li>
 							<a href="javascript:;" class="play" data-enemy="{{user}}" title="Play with {{user}}">{{user}}</a>
 						</li>
+					{{else}}
+						<li class="center">No players online here.</li>
 					{{/each}}
 				</div>
 			{{/unless}}

@@ -1,13 +1,17 @@
 <head>
-  <title>TicTacToe</title>
+  <title>A classic tictactoe web multiplayer game | Meteor TicTacToe</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="author" content="Caio Ribeiro Pereira and Paulo Cesar">
+	<meta name="description" content="A classic tictactoe web multiplayer game.">
 </head>
-
 <body>
-	<h1 class="title">TicTacToe</h1>
+	{{> header}}
   {{> opponents}}
-  <div class="gameboard"></div>
+  {{> game}}
   {{> status}}
   {{> ranking}}
+  {{> footer}}
 </body>
