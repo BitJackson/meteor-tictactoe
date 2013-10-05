@@ -20,6 +20,7 @@ Just download the itens below:
 * Node.js (http://nodejs.org)
 * Meteor (http://meteor.com)
 * Meteorite (Run the command: `npm install -g meteorite`)
+* Install smart packages: `mrt install`
 * Run the command: `meteor`
 * Open the browser: `http://localhost:3000`
 
