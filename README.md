@@ -26,8 +26,8 @@ Just download the itens below:
 
 ## Collaborators
 
-Caio R. Pereira - (http://twitter.com/crp_underground)
-Paulo Cesar - (http://twitter.com/pauloc062)
+* Caio R. Pereira - (http://twitter.com/crp_underground)
+* Paulo Cesar - (http://twitter.com/pauloc062)
 
 ## License
 * MIT - http://caio-ribeiro-pereira.mit-license.org
