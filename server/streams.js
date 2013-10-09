@@ -4,8 +4,8 @@ GameStream.permissions.write(function() { return true; });
 GameStream.permissions.read(function() { return true; });
 
 GameStream.on('enter', function(user) {
-	Users.login(user.substr(0, 10));
-	Onlines.enter(user.substr(0, 10));
+	Users.login(user);
+	Onlines.enter(user);
 });
 
 GameStream.on('start', function(user, enemy, room, weapon) {

@@ -17,6 +17,7 @@ Template.opponents.events({
   "submit .form": function(event) {
     var user = $(event.target).find('.input').val();
     if(user) {
+      user = user.substr(0, 10);
       Session.set('user', user);
       Session.set('weapon', GameLogic.X);
       GameStream.emit('enter', user);
