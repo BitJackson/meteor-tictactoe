@@ -1,11 +1,20 @@
 Onlines = new Meteor.SmartCollection('onlines');
 
+Onlines.INTERVAL = 60000;
+
 Onlines.opponentsOf = function (user) {
   return this.find({user: {$ne: user}, playing: false});
 };
 
+Onlines.namelist = function() {
+	// Terminar
+	var onlines = this.find({}, {_id: 0, user: 1});
+	console.log(onlines);
+	return _.pluck(onlines, 'user');
+};
+
 Onlines.enter = function(user) {
-	this.insert({user: user, playing: false});
+	this.insert({user: user, playing: false, keepalive: new Date().getTime()});
 };
 
 Onlines.startGame = function(user, enemy) {
@@ -17,14 +26,10 @@ Onlines.gameOver = function(user) {
 	this.update({user: user}, {$set: {playing: false}});
 };
 
-Onlines.quit = function(user) {
-	if(user) {
-		this.remove({user: user});
-	}
+Onlines.keepalive = function(user) {
+	this.update({user: user}, {$set: {keepalive: new Date().getTime()}});
 };
 
-Onlines.startup = function() {
-	if(this.find().count()) {
-		this.remove({});
-	}
+Onlines.clearAll = function() {
+	this.remove({keepalive: {$lt: (new Date().getTime() - this.INTERVAL)}});
 };

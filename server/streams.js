@@ -35,8 +35,8 @@ GameStream.on('cancel', function(msg, room) {
 	GameStream.emit('end', msg, room);
 });
 
-GameStream.on('quit', function(user) {
-	Onlines.quit(user);
+GameStream.on('keepalive', function(user) {
+	Onlines.keepalive(user);
 });
 
 GameStream.on('winner', function (user) {

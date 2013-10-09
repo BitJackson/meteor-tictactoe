@@ -22,9 +22,3 @@ Users.draws = function (user) {
 Users.loses = function (user) {
   this.update({user: user}, {$inc: {plays: 1, loses: 1}});
 }
-
-Users.startup = function() {
-	if(this.find().count()) {
-		this.remove({});
-	}
-}

@@ -5,8 +5,10 @@ Meteor.startup(function() {
   Meteor.subscribe('onlines');
   $('.input').focus();
   VoiceShoot.initialize();
-  //$(window).on('beforeunload', function() {
-  //	GameStream.emit('quit', Session.get('user'));
-  //	return "You will quit the game...";
-  //}); 
 });
+
+Meteor.setInterval(function() {
+	if(Session.get('user')) {
+		GameStream.emit('keepalive', Session.get('user'));
+	}
+}, 5000);

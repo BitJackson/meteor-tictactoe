@@ -1,4 +1,7 @@
 Meteor.startup(function() {
-	Users.startup();
-	Onlines.startup();
+	console.log('Meteor TicTacToe Running...');
 });
+
+Meteor.setInterval(function() {
+	Onlines.clearAll();
+}, Onlines.INTERVAL);
