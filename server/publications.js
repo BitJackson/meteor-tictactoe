@@ -1,6 +1,9 @@
-Meteor.publish('users', function() {
+Meteor.publish('users', function(user) {
 	return Users.find();
 });
-Meteor.publish('onlines', function() {
+Meteor.publish('onlines', function(user) {
 	return Onlines.find();
+});
+Meteor.publish('ranking', function() {
+	return Users.showRanking(Onlines.userlist());
 });
