@@ -3,7 +3,7 @@ GameStream = new Meteor.Stream('game');
 Meteor.startup(function() {
   Session.set('main_menu', true);
   $('.input').focus();
-  VoiceShoot.initialize();
+  //VoiceShoot.initialize();
 });
 
 Deps.autorun(function () {
