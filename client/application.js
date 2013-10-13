@@ -1,10 +1,15 @@
 GameStream = new Meteor.Stream('game');
 
 Meteor.startup(function() {
-  Meteor.subscribe('users');
-  Meteor.subscribe('onlines');
+  Session.set('main_menu', true);
   $('.input').focus();
   VoiceShoot.initialize();
+});
+
+Deps.autorun(function () {
+  Meteor.subscribe('ranking');
+  Meteor.subscribe('users');
+  Meteor.subscribe('onlines');
 });
 
 Meteor.setInterval(function() {

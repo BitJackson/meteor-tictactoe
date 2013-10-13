@@ -4,6 +4,7 @@ var clearGameSession = function(msg, room) {
     Session.set('enemy', null);
     Session.set('room', null);
     Session.set('playing', false);
+    Session.set('main_menu', true);
     Session.set('weapon', GameLogic.X);
     $('.gameboard i').detach();
   }
