@@ -1,27 +1,32 @@
 <template name="opponents">
-	<div class="opponents">
-		{{#unless isPlaying}}
-			{{#unless hasRoom}}
-				<div class="userlist">
-					{{#if currentUser}}
-						<h2>{{currentUser.user}} ({{currentUser.wins}} wins).</h2>
-					{{else}}
-						<form class="form">
-							<input type="text" class="input" placeholder="Your name and press ENTER" maxlength="10">
-						</form>
-					{{/if}}
-					<hr>
-					<h3>Opponents</h3>
-					<ul>
-					{{#each onlines}}
-						<li>
-							<a href="javascript:;" class="play" data-enemy="{{user}}" title="Play with {{user}}">{{user}}</a>
-						</li>
-					{{else}}
-						<li class="center">No players online.</li>
-					{{/each}}
-				</div>
+	{{#if showMainMenu}}
+		<div class="opponents">
+			{{#unless isPlaying}}
+				{{#unless hasRoom}}
+					<div class="userlist">
+						{{#if currentUser}}
+							<h2>{{currentUser.user}} ({{currentUser.wins}} wins).</h2>
+						{{else}}
+							<form class="form">
+								<input type="text" class="input" placeholder="Your name and press ENTER" maxlength="10">
+							</form>
+						{{/if}}
+						<hr>
+						<h3>Opponents</h3>
+						<ul>
+						{{#each onlines}}
+							<li>
+								<a href="javascript:;" class="play" data-enemy="{{user}}" title="Play with {{user}}">{{user}}</a>
+							</li>
+						{{else}}
+							<li class="center">No players online.</li>
+						{{/each}}
+							<hr>
+							<li class="center"><a href="javascript:;" class="show_ranking">Ranking</a></li>
+						</ul>
+					</div>
+				{{/unless}}
 			{{/unless}}
-		{{/unless}}
-	</div>
+		</div>
+	{{/if}}
 </template>

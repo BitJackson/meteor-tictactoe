@@ -10,19 +10,26 @@ Template.opponents.helpers({
   },
   isPlaying: function() {
     return Session.get('playing');
+  },
+  showMainMenu: function() {
+    return Session.equals('main_menu', true);
   }
 });
 
 Template.opponents.events({
-  "submit .form": function(event) {
+  "click .show_ranking": function(event) {
+    Session.set('main_menu', false);
+  },
+  "submit .form": function(event, template) {
     var user = $(event.target).find('.input').val();
-    if(user) {
+    if(user && user.match(/^[0-9a-zA-Z_]{4,10}$/)) {
       user = user.substr(0, 10);
       Session.set('user', user);
       Session.set('weapon', GameLogic.X);
       GameStream.emit('enter', user);
     } else {
-      alert('Invalid name.');
+      alert('Invalid name.\nThe name must contains at least 4 chars.\nOnly letters, numbers and underscore are accepted.');
+      template.find('.input').focus();
     }
     event.preventDefault();
   },

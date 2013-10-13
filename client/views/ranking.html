@@ -1,29 +1,39 @@
 <template name="ranking">
-	<div class="ranking">
-		<h3>Ranking</h3>
-		<hr>
-		<table>
-			<tr>
-				<td width="60%">Name</td>
-				<td width="20%">Plays</td>
-				<td width="20%">Wins</td>
-				<td width="20%">Loses</td>
-			</tr>
-			{{#each users}}
+	{{#if showRanking}}
+		<div class="ranking">
+			<h3>Ranking</h3>
+			<hr>
+			<table>
 				<tr>
-					<td>{{user}}</td>
-					<td align="center">{{plays}}</td>
-					<td align="center">{{wins}}</td>
-					<td align="center">{{loses}}</td>
+					<td width="60%">Name</td>
+					<td width="20%">Plays</td>
+					<td width="20%">Wins</td>
+					<td width="20%">Loses</td>
 				</tr>
-			{{else}}
+				{{#each users}}
+					<tr>
+						<td>{{user}}</td>
+						<td align="center">{{plays}}</td>
+						<td align="center">{{wins}}</td>
+						<td align="center">{{loses}}</td>
+					</tr>
+				{{else}}
+					<tr>
+						<td colspan="4" align="center">
+							<br>
+							<p class="center">Come on! There is no winner yet!</p>
+						</td>
+					</tr>
+				{{/each}}
 				<tr>
 					<td colspan="4" align="center">
-						<br>
-						<p class="center">Come on! There is no winner yet!</p>
+						<hr>
+						<h3 class="center">
+							<a href="javascript:;" class="back_mainmenu">Main menu</a>
+						</h3>
 					</td>
 				</tr>
-			{{/each}}
-		</table>
-	</div>
+			</table>
+		</div>
+	{{/if}}
 </template>
