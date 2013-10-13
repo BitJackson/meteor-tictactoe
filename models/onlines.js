@@ -6,10 +6,8 @@ Onlines.opponentsOf = function (user) {
   return this.find({user: {$ne: user}, playing: false});
 };
 
-Onlines.namelist = function() {
-	// Terminar
-	var onlines = this.find({}, {_id: 0, user: 1});
-	console.log(onlines);
+Onlines.userlist = function() {
+	var onlines = this.find({}, {_id: 0, user: 1}).fetch();
 	return _.pluck(onlines, 'user');
 };
 
