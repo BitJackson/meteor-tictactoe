@@ -1,6 +1,4 @@
 Meteor.startup(function() {
-	Onlines.remove({});
-	Users.remove({});
 	console.log('Meteor TicTacToe Running...');
 });
 
