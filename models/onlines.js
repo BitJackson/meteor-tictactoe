@@ -1,6 +1,6 @@
 Onlines = new Meteor.SmartCollection('onlines');
 
-Onlines.INTERVAL = 60000;
+Onlines.INTERVAL = 20000;
 
 Onlines.opponentsOf = function (user) {
   return this.find({user: {$ne: user}, playing: false});
