@@ -25,9 +25,11 @@ Onlines.gameOver = function(user) {
 };
 
 Onlines.keepalive = function(user) {
+	console.log('Keepalive users checking...');
 	this.update({user: user}, {$set: {keepalive: new Date().getTime()}});
 };
 
 Onlines.clearAll = function() {
+	console.log('Clear users offline');
 	this.remove({keepalive: {$lt: (new Date().getTime() - this.INTERVAL)}});
 };
